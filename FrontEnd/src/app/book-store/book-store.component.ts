@@ -39,18 +39,25 @@ export class BookStoreComponent implements OnInit {
       description: this.formBook.value.description,
 
     }
-    this.bookService.createBook(book).subscribe(() => {
-
-      if (book.id == '') {
-        alert("Create successful")
-      } else {
-        alert("Update Successful")
-      }
-      this.formBook.reset();
-      // @ts-ignore
-      document.getElementById(`formEditBook`).hidden = true;
-      this.getAllBooks()
-    })
+    if (book.id) {
+      this.bookService.updateBook(book.id, book).subscribe(bookEdit => {
+        console.log(bookEdit)
+        alert("Update success")
+        this.getAllBooks()
+      })
+    } else {
+      this.bookService.createBook(book).subscribe(() => {
+        if (book.id == '') {
+          alert("Create successful")
+        } else {
+          alert("Update Successful")
+        }
+        this.formBook.reset();
+        // @ts-ignore
+        document.getElementById(`formEditBook`).hidden = true;
+        this.getAllBooks()
+      })
+    }
   }
 
   editBook(id: any) {

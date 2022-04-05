@@ -26,6 +26,11 @@ export class BookService {
     return this.http.post(API_URL + '/books/', book)
   }
 
+  updateBook(id: any, book: Book): Observable<Book> {
+    // @ts-ignore
+    return this.http.put<Book>(API_URL + '/books/' + id,book)
+  }
+
   deleteBook(id: number): Observable<any> {
     return this.http.delete(API_URL + '/books/' + id)
   }
